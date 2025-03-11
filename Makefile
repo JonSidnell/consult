@@ -14,7 +14,10 @@ help:     ## Show this help.
 setup_dev_db: ## Set up the development db on a local postgres
 	createdb consultations_dev
 	-createuser consultations_dev
+	-psql -d postgres -c 'ALTER USER consultations_dev with encrypted password '\''consultations_dev'\'';'
+	-psql -d postgres -c 'ALTER USER consultations_dev SUPERUSER;'
 	-psql -d postgres -c 'GRANT ALL ON database consultations_dev TO consultations_dev;'
+	-psql -d postgres -c 'GRANT ALL ON SCHEMA public TO consultations_dev;'
 
 .PHONY: reset_dev_db
 reset_dev_db: ## Reset the dev db
